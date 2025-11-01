@@ -1,23 +1,32 @@
 # inst/app/app.R
-
-#verify the launcher works
 library(shiny)
+
+# bring objects from the package into the app
+sim_monthly <- get("sim_monthly", envir = asNamespace("yusufHAIGermany"))
+sim_weekly  <- get("sim_weekly",  envir = asNamespace("yusufHAIGermany"))
+sim_daily   <- get("sim_daily",   envir = asNamespace("yusufHAIGermany"))
 
 ui <- fluidPage(
   titlePanel("Germany HAI Explorer"),
   sidebarLayout(
-    sidebarPanel("Filters go here"),
+    sidebarPanel(
+      selectInput("freq", "Frequency", c("Monthly","Weekly","Daily"))
+    ),
     mainPanel(
-      h4("Hello! Your app launched correctly."),
-      plotOutput("demo")
+      tableOutput("peek")
     )
   )
 )
 
-server <- function(input, output, session) {
-  output$demo <- renderPlot({
-    plot(1:10, 1:10, main = "Demo plot")
+server <- function(input, output, session){
+  dat <- reactive({
+    switch(input$freq,
+           "Monthly" = sim_monthly,
+           "Weekly"  = sim_weekly,
+           "Daily"   = sim_daily
+    )
   })
+  output$peek <- renderTable(head(dat(), 10))
 }
 
 shinyApp(ui, server)
