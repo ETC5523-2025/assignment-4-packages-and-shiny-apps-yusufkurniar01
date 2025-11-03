@@ -1,0 +1,21 @@
+---
+title: "data-description"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{data-description}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(yusufHAIGermany)
+```
+
+The original PPS snapshot (2011) provides total counts and uncertainty by HAI category. Monthly values for 2011 – 2012 are simulated by distributing annual totals across months with mild winter seasonality and some random variation. Weekly values are estimated by dividing each month into ISO weeks, using a smooth within-month weighting profile. Daily values are calculated by dividing each week into seven days, with a slight weekday effect. All simulations ensure non-negativity and stay within plausible ranges relative to the original totals.

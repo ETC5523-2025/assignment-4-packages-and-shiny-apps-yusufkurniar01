@@ -1,21 +1,11 @@
-# MIT License
+# License
 
-Copyright (c) 2025 Yusuf Romadhon
+This R package (`yusufHAIGermany`) is released under the **MIT License**.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+The included data (`sim_monthly`, `sim_weekly`, `sim_daily`) are **synthetic derivatives** of publicly available data from the European Centre for Disease Prevention and Control (ECDC) *Point Prevalence Survey of Healthcare-Associated Infections and Antimicrobial Use in European Acute Care Hospitals, 2011–2012*.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Original data © European Centre for Disease Prevention and Control (ECDC), 2013.  
+Licensed under the **Creative Commons Attribution 4.0 International License (CC BY 4.0)**.  
+See [https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/) for details.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+The simulation and transformation code used to generate the synthetic datasets (`data-raw/simulate_hai_germany.R`) are © 2025 Yusuf Romadhon and licensed under the MIT License.
