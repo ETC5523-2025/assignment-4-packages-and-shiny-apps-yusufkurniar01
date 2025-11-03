@@ -1,13 +1,15 @@
+# _pkgdown.yml
+
 url: https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01
 destination: docs
 
 template:
   bslib:
     version: 5
-    preset: [flatly, darkly]   #light and dark presets
+    bootswatch: flatly
     base_font: { google: "Inter" }
     heading_font: { google: "Inter" }
-    primary: "#2C3E50"         #overrides theme primary
+    primary: "#2C3E50"
 
 navbar:
   structure:
