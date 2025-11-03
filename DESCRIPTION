@@ -13,17 +13,20 @@ BugReports:
 Depends: 
     R (>= 4.2.0)
 Imports: 
-    bslib,
-    dplyr,
-    ggplot2,
-    readr,
-    shiny,
-    lubridate,
-    tidyverse
+    shiny
 Suggests: 
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    dplyr,
+    ggplot2,
+    bslib,
+    DT,
+    plotly,
+    lubridate,
+    readr,
+    tidyverse,
+    rmarkdown
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
