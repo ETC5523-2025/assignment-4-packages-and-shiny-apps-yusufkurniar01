@@ -1,0 +1,54 @@
+url: https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01
+destination: docs
+
+template:
+  bslib:
+    version: 5
+    preset: [flatly, darkly]   #light and dark presets
+    base_font: { google: "Inter" }
+    heading_font: { google: "Inter" }
+    primary: "#2C3E50"         #overrides theme primary
+
+navbar:
+  structure:
+    left:  [get-started, examples, reference, articles, news]
+    right: [search]
+  components:
+    get-started:
+      text: Get started
+      href: articles/get-started.html
+    examples:
+      text: Examples
+      href: articles/examples.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Data & Methods
+      menu:
+        - text: Data description
+          href: articles/data-description.html
+        - text: Simulation notes
+          href: articles/germany-hai-explorer.html
+    news:
+      text: Change log
+      href: news/index.html
+
+home:
+  title: "yusufHAIGermany"
+  description: >
+    Reproducible simulation and visualisation of Germany HAI time series
+    (daily/weekly/monthly) from the 2011–2012 PPS snapshot, with an embedded Shiny app.
+
+reference:
+  - title: "App"
+    contents:
+      - launch_app
+  - title: "Data"
+    contents:
+      - sim_daily
+      - sim_weekly
+      - sim_monthly
+
+news:
+  one_page: true
