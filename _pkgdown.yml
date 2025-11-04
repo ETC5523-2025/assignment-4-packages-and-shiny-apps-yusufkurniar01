@@ -1,41 +1,37 @@
-# _pkgdown.yml
-
 url: https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01
 destination: docs
+
+pkgdown-nav-height: 30px
 
 template:
   bslib:
     version: 5
     bootswatch: flatly
-    pkgdown-nav-height: 75px
     base_font: { google: "Inter" }
     heading_font: { google: "Inter" }
     primary: "#2C3E50"
+  assets:
+    - pkgdown/extra.css
+    - pkgdown/extra.js
 
 navbar:
   structure:
     left:  [get-started, examples, reference, articles, news]
-    right: [search]
+    right: [search, theme-toggle]
   components:
-    get-started:
-      text: Get started
-      href: articles/get-started.html
-    examples:
-      text: Examples
-      href: articles/examples.html
-    reference:
-      text: Reference
-      href: reference/index.html
+    get-started: { text: Get started, href: articles/get-started.html }
+    examples:    { text: Examples,   href: articles/examples.html }
+    reference:   { text: Reference,  href: reference/index.html }
     articles:
       text: Data & Methods
       menu:
-        - text: Data description
-          href: articles/data-description.html
-        - text: Simulation notes
-          href: articles/germany-hai-explorer.html
-    news:
-      text: Change log
-      href: news/index.html
+        - { text: Data description,  href: articles/data-description.html }
+        - { text: Simulation notes,  href: articles/germany-hai-explorer.html }
+    news:        { text: Change log, href: news/index.html }
+    #placeholder that JS will replace with a real toggle button
+    theme-toggle:
+      text: "Theme"
+      href: "#"
 
 home:
   title: "yusufHAIGermany"
@@ -45,13 +41,8 @@ home:
 
 reference:
   - title: "App"
-    contents:
-      - launch_app
+    contents: [launch_app]
   - title: "Data"
-    contents:
-      - sim_daily
-      - sim_weekly
-      - sim_monthly
+    contents: [sim_daily, sim_weekly, sim_monthly]
 
-news:
-  one_page: true
+news: { one_page: true }
