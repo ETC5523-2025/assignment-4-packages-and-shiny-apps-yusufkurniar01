@@ -1,0 +1,81 @@
+---
+title: "Get Started with yusufHAIGermany"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    df_print: paged
+vignette: >
+  %\VignetteIndexEntry{Get Started with yusufHAIGermany}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, message = FALSE, warning = FALSE,
+  fig.width = 9, fig.height = 5.2, fig.align = "center"
+)
+library(dplyr)
+library(tidyr)
+library(plotly)
+library(lubridate)
+```
+
+```{r load-data, message=FALSE}
+# Load the datasets from the installed package during vignette build
+if (!requireNamespace("yusufHAIGermany", quietly = TRUE)) {
+  stop("Package not available in vignette build process.")
+}
+
+data("sim_monthly", package = "yusufHAIGermany")
+data("sim_weekly",  package = "yusufHAIGermany")
+data("sim_daily",   package = "yusufHAIGermany")
+
+# quick sanity check so the build fails early if something is missing
+stopifnot(
+  exists("sim_monthly"), exists("sim_weekly"), exists("sim_daily")
+)
+```
+
+## Overview
+
+This vignette gives a short tour of the package datasets and shows how to make quick, interactive checks.
+
+The package provides three simulation tables for HAIs in Germany (2011 – 2012):
+
+- sim_monthly: columns date, year, month, hai, cases_month, deaths_month, dalys_month
+
+- sim_weekly: columns date, year, iso_week, hai, cases_week, deaths_week, dalys_week
+
+- sim_daily: columns date, year, yday, wday, hai, cases_day, deaths_day, dalys_day
+
+## Data at a glance
+
+```{r}
+dplyr::glimpse(sim_monthly)
+dplyr::glimpse(sim_weekly)
+dplyr::glimpse(sim_daily)
+```
+
+## Monthly totals by infection type
+
+```{r}
+p_month <- sim_monthly |>
+  mutate(month_lab = format(as.Date(date), "%b %Y")) |>
+  group_by(date, hai) |>
+  summarise(cases = sum(cases_month), .groups = "drop") |>
+  arrange(date) |>
+  plot_ly(x = ~date, y = ~cases, 
+          color = ~hai, type = "scatter", 
+          mode = "lines",
+          hovertemplate = paste("%{x|%b %Y}",
+                                "%{fullData.name}: %{y:,.0f} cases")
+          ) |>
+  layout(
+    yaxis = list(title = "Cases (monthly)"),
+    xaxis = list(title = "Date")
+)
+
+p_month
+```
+
