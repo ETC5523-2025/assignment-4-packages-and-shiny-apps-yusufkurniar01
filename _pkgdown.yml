@@ -1,23 +1,19 @@
+# _pkgdown.yml
 url: https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01
 destination: docs
-
-pkgdown-nav-height: 30px
 
 template:
   bslib:
     version: 5
     bootswatch: flatly
-    base_font: { google: "Inter" }
-    heading_font: { google: "Inter" }
+    base_font:    { google: "Inter" }
+    heading_font: { google: "Merriweather" }
     primary: "#2C3E50"
-  assets:
-    - pkgdown/extra.css
-    - pkgdown/extra.js
 
 navbar:
   structure:
     left:  [get-started, examples, reference, articles, news]
-    right: [search, theme-toggle]
+    right: [search, theme, github]   # ← order: Search | Theme | GitHub
   components:
     get-started: { text: Get started, href: articles/get-started.html }
     examples:    { text: Examples,   href: articles/examples.html }
@@ -27,17 +23,17 @@ navbar:
       menu:
         - { text: Data description,  href: articles/data-description.html }
         - { text: Simulation notes,  href: articles/germany-hai-explorer.html }
-    news:        { text: Change log, href: news/index.html }
-    #placeholder that JS will replace with a real toggle button
-    theme-toggle:
-      text: "Theme"
-      href: "#"
 
-home:
-  title: "yusufHAIGermany"
-  description: >
-    Reproducible simulation and visualisation of Germany HAI time series
-    (daily/weekly/monthly) from the 2011–2012 PPS snapshot, with an embedded Shiny app.
+    news:   { text: Change log, href: news/index.html }
+
+    # placeholder used by the JS toggle (don’t remove)
+    theme:  { text: Theme, href: "#" }
+
+    # GitHub icon/link (Font Awesome)
+    github:
+      icon: fab fa-github
+      href: https://github.com/ETC5523-2025/assignment-4-packages-and-shiny-apps-yusufkurniar01
+      aria-label: "GitHub repository"
 
 reference:
   - title: "App"
