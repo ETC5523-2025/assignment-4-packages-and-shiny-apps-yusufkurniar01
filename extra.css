@@ -1,20 +1,34 @@
-:root { --pkgdown-nav-height: 30px; } /* match _pkgdown.yml */
-
-/* make anchors and wheel scrolling respect the sticky bar */
-body { scroll-padding-top: calc(var(--pkgdown-nav-height) + 8px); }
-h1, h2, h3, h4, h5, h6 { scroll-margin-top: calc(var(--pkgdown-nav-height) + 8px); }
-
-/* ensure the navbar height is recognized */
-.navbar { min-height: var(--pkgdown-nav-height); }
-
-/* add top padding to the FIRST content container after the navbar */
-.navbar + .container,
-.navbar + .container-fluid,
-.navbar + .page-content {
-  padding-top: calc(var(--pkgdown-nav-height) + 8px) !important;
+:root {
+  --pkgdown-nav-height: 30px;  /* keep in sync with YAML */
 }
 
-/* cover the main wrapper */
+/* keep headings/content from hiding under the sticky navbar */
+body { scroll-padding-top: calc(var(--pkgdown-nav-height) + 8px); }
+h1, h2, h3, h4, h5, h6 { scroll-margin-top: calc(var(--pkgdown-nav-height) + 8px); }
+.navbar { min-height: var(--pkgdown-nav-height); }
+.navbar + .container,
+.navbar + .container-fluid,
+.navbar + .page-content,
 .navbar + main[role="main"] {
   padding-top: calc(var(--pkgdown-nav-height) + 8px) !important;
 }
+
+/* space between search input and Theme link */
+.navbar form[role="search"] input[type="search"],
+.navbar .form-inline .form-control {
+  margin-right: 12px;
+}
+
+/* space to the left of the Theme link */
+.navbar .nav-link.theme-toggle {
+  margin-left: 4px;
+}
+
+/* small gap before the GitHub icon */
+.navbar .navbar-nav .nav-item .fab.fa-github {
+  margin-left: 8px;
+}
+
+/* larger headings with the new serif */
+h1, .h1 { font-weight: 700; letter-spacing: .2px; }
+h2, .h2 { font-weight: 700; letter-spacing: .15px; }

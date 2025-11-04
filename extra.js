@@ -1,4 +1,4 @@
-// pkgdown/extra.js
+// extra.js
 (function () {
   const KEY = "yusufHAIGermany-color-mode";
   const MODES = ["light", "dark", "auto"];
@@ -19,16 +19,14 @@
   }
 
   function injectToggle() {
-    // Find the placeholder nav item labeled "Theme"
     const candidate = Array.from(document.querySelectorAll(".navbar .nav-link"))
       .find(a => a.textContent.trim().toLowerCase() === "theme");
     if (!candidate) return;
 
-    // Turn it into a simple cycling button (no dropdowns, no Popper)
     candidate.setAttribute("data-theme-toggle", "1");
+    candidate.classList.add("theme-toggle");      //add class for spacing
     candidate.href = "#";
 
-    // initial mode
     const saved = localStorage.getItem(KEY);
     const mode = MODES.includes(saved) ? saved : "auto";
     apply(mode);
