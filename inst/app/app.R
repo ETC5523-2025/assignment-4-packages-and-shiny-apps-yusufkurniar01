@@ -10,6 +10,7 @@ library(dplyr)
 library(tidyr)
 library(lubridate)
 library(DT)
+library(yusufHAIGermany)
 
 #load data
 data("sim_daily",   package = "yusufHAIGermany")

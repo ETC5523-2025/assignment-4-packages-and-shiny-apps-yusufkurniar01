@@ -1,0 +1,15 @@
+Package: yusufHAIGermanyApp
+Type: Shiny
+Title: yusufHAIGermany dashboard
+Version: 0.0.1
+Imports:
+    shiny,
+    bslib,
+    plotly,
+    dplyr,
+    tidyr,
+    lubridate,
+    DT,
+    yusufHAIGermany
+Remotes:
+    ETC5523-2025/assignment-4-packages-and-shiny-apps-yusufkurniar01

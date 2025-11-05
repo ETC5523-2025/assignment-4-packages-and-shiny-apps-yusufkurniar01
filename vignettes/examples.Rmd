@@ -22,7 +22,7 @@ library(lubridate)
 ```
 
 ```{r load-data, message=FALSE}
-# Load the datasets from the installed package during vignette build
+#load the datasets from the installed package during vignette build
 if (!requireNamespace("yusufHAIGermany", quietly = TRUE)) {
   stop("Package not available in vignette build process.")
 }
@@ -31,7 +31,7 @@ data("sim_monthly", package = "yusufHAIGermany")
 data("sim_weekly",  package = "yusufHAIGermany")
 data("sim_daily",   package = "yusufHAIGermany")
 
-# quick sanity check so the build fails early if something is missing
+#quick sanity check so the build fails early if something is missing
 stopifnot(
   exists("sim_monthly"), exists("sim_weekly"), exists("sim_daily")
 )

@@ -13,7 +13,7 @@ template:
 navbar:
   structure:
     left:  [get-started, examples, reference, articles, news]
-    right: [search, theme, github]   # ← order: Search | Theme | GitHub
+    right: [search, theme, github]
   components:
     get-started: { text: Get started, href: articles/get-started.html }
     examples:    { text: Examples,   href: articles/examples.html }
@@ -23,8 +23,9 @@ navbar:
       menu:
         - { text: Data description,  href: articles/data-description.html }
         - { text: Simulation notes,  href: articles/germany-hai-explorer.html }
-
-    news:   { text: Change log, href: news/index.html }
+    news: { text: Change log, href: news/index.html }
+    #shinyapps.io
+    app:  { text: "Live App", href: "https://yusufkurniar01.shinyapps.io/yusufHAIGermany/" }
 
     # placeholder used by the JS toggle (don’t remove)
     theme:  { text: Theme, href: "#" }
