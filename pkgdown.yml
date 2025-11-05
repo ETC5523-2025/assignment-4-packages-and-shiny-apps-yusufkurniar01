@@ -3,9 +3,10 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   data-description: data-description.html
+  examples: examples.html
   germany-hai-explorer: germany-hai-explorer.html
   get-started: get-started.html
-last_built: 2025-11-04T13:39Z
+last_built: 2025-11-05T01:53Z
 urls:
   reference: https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/reference
   article: https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/articles
