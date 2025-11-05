@@ -12,9 +12,20 @@ template:
 
 navbar:
   structure:
-    left:  [get-started, examples, reference, articles, news]
+    #menu structure
+    left:  [app, get-started, examples, reference, articles, news]
     right: [search, theme, github]
   components:
+    #dorpdown for the shiny dashboard
+    app:
+      text: "App"
+      menu:
+        - text: "Live App"
+          href: "https://yusufkurniar01.shinyapps.io/yusufHAIGermany/"
+          target: _blank
+        - text: "Run Locally"
+          href: reference/launch_app.html
+
     get-started: { text: Get started, href: articles/get-started.html }
     examples:    { text: Examples,   href: articles/examples.html }
     reference:   { text: Reference,  href: reference/index.html }
@@ -24,13 +35,11 @@ navbar:
         - { text: Data description,  href: articles/data-description.html }
         - { text: Simulation notes,  href: articles/germany-hai-explorer.html }
     news: { text: Change log, href: news/index.html }
-    #shinyapps.io
-    app:  { text: "Live App", href: "https://yusufkurniar01.shinyapps.io/yusufHAIGermany/" }
 
-    # placeholder used by the JS toggle (don’t remove)
+    #placeholder used by the JS toggle
     theme:  { text: Theme, href: "#" }
 
-    # GitHub icon/link (Font Awesome)
+    #GitHub icon/link (Font Awesome)
     github:
       icon: fab fa-github
       href: https://github.com/ETC5523-2025/assignment-4-packages-and-shiny-apps-yusufkurniar01
