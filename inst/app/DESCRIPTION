@@ -13,6 +13,6 @@ Imports:
     scales,
     glue,
     shinyjs,
-    yusufHAIGermany
+    yusufHAIGermany (>= 0.0.0.9005)
 Remotes:
     ETC5523-2025/assignment-4-packages-and-shiny-apps-yusufkurniar01

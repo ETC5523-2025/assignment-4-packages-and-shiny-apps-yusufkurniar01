@@ -7,10 +7,12 @@
 \format{
 A tibble with columns:
 \describe{
-\item{date}{Date (first day of month)}
+\item{date}{Date, first day of month}
 \item{year}{Integer year}
-\item{month}{Integer month}
+\item{month}{Integer month number}
 \item{hai}{Character infection type}
+\item{region}{Character region label}
+\item{sex}{Character sex label: "Female" or "Male"}
 \item{cases_month}{Integer simulated cases}
 \item{deaths_month}{Integer simulated deaths}
 \item{dalys_month}{Numeric simulated DALYs}
@@ -20,6 +22,7 @@ A tibble with columns:
 sim_monthly
 }
 \description{
-Synthetic monthly counts and DALYs by HAI type (HAP, SSI, BSI, UTI, CDI).
+Synthetic monthly counts and DALYs by HAI type (HAP, SSI, BSI, UTI, CDI),
+split by region and sex.
 }
 \keyword{datasets}

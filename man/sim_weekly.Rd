@@ -11,6 +11,8 @@ A tibble with columns:
 \item{year}{Integer year}
 \item{iso_week}{Integer ISO week number}
 \item{hai}{Character infection type}
+\item{region}{Character region label}
+\item{sex}{Character sex label: "Female" or "Male"}
 \item{cases_week}{Integer simulated cases}
 \item{deaths_week}{Integer simulated deaths}
 \item{dalys_week}{Numeric simulated DALYs}
@@ -20,6 +22,7 @@ A tibble with columns:
 sim_weekly
 }
 \description{
-Simulated German HAI weekly series, 2011–2012
+Synthetic weekly counts and DALYs by HAI type,
+split by region and sex.
 }
 \keyword{datasets}
