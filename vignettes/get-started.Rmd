@@ -79,3 +79,33 @@ p_month <- sim_monthly |>
 p_month
 ```
 
+## Top infection type by month
+
+```{r}
+top_tbl <- sim_monthly |>
+  group_by(date, hai) |>
+  summarise(cases = sum(cases_month), .groups = "drop") |>
+  group_by(date) |>
+  slice_max(order_by = cases, n = 1, with_ties = FALSE) |>
+  ungroup() |>
+  arrange(date)
+
+top_tbl
+```
+
+## Annual totals
+
+```{r}
+annual <- sim_monthly |>
+  mutate(yr = year(as.Date(date))) |>
+  group_by(yr) |>
+  summarise(
+    cases = sum(cases_month),
+    deaths = sum(deaths_month),
+    dalys = sum(dalys_month),
+    .groups = "drop"
+    )
+
+annual
+```
+

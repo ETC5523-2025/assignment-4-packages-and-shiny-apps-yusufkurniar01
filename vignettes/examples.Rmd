@@ -1,0 +1,140 @@
+---
+title: "Examples: Interactive Time Series"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    df_print: paged
+vignette: >
+  %\VignetteIndexEntry{Examples: Interactive Time Series}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, message = FALSE, warning = FALSE,
+  fig.width = 9, fig.height = 5.4, fig.align = "center"
+)
+library(dplyr)
+library(tidyr)
+library(plotly)
+library(lubridate)
+```
+
+```{r load-data, message=FALSE}
+# Load the datasets from the installed package during vignette build
+if (!requireNamespace("yusufHAIGermany", quietly = TRUE)) {
+  stop("Package not available in vignette build process.")
+}
+
+data("sim_monthly", package = "yusufHAIGermany")
+data("sim_weekly",  package = "yusufHAIGermany")
+data("sim_daily",   package = "yusufHAIGermany")
+
+# quick sanity check so the build fails early if something is missing
+stopifnot(
+  exists("sim_monthly"), exists("sim_weekly"), exists("sim_daily")
+)
+```
+
+## Interactive monthly timeline
+
+Animated totals by infection type. Use the play controls to step through the period.
+
+```{r}
+monthly_long <- sim_monthly |>
+  mutate(frame = format(as.Date(date), "%b %Y")) |>
+  select(date, frame, hai, cases_month)
+
+plot_ly(
+  monthly_long,
+  x = ~hai, y = ~cases_month, frame = ~frame,
+  type = "bar", color = ~hai,
+  hovertemplate = paste(
+    "<b>%{frame}</b><br>%{x}: %{y:,.0f} cases<extra></extra>")
+  ) |>
+  layout(
+    xaxis = list(title = ""),
+    yaxis = list(title = "Cases (monthly)"),
+    updatemenus = list(
+      list(type = "buttons",
+           buttons = list(
+             list(method = "animate",
+                  args = list(NULL, list(mode = "immediate", 
+                                         fromcurrent = TRUE)),
+                  label = "Play"),
+             list(method = "animate",
+                  args = list(NULL, list(mode = "immediate",
+                                         frame = list(duration = 0),
+                                         transition = list(duration = 0))),
+                  label = "Pause")
+             ),
+           pad = list(r = 10, t = 70), x = 0.1, xanchor = "left", 
+           y = 0, yanchor = "top")
+      )
+    )
+
+```
+
+## Weekly heatmap
+
+Cases per week by infection type. Tooltip shows exact values.
+
+```{r}
+wk <- sim_weekly |>
+  mutate(week = iso_week, yr = year(as.Date(date))) |>
+  group_by(yr, week, hai) |>
+  summarise(cases = sum(cases_week), .groups = "drop")
+
+plot_ly(
+  wk, x = ~week, y = ~hai, z = ~cases, type = "heatmap",
+  hovertemplate = "W%{x} — %{y}<br>%{z:,.0f} cases<extra></extra>"
+  ) |>
+  layout(xaxis = list(title = "ISO week"), yaxis = list(title = ""))
+
+```
+
+## Daily lines: cases, deaths, DALYs
+
+Small multiples with one chart per metric.
+
+```{r}
+daily_cases <- sim_daily |>
+  group_by(date, hai) |>
+  summarise(value = sum(cases_day), .groups = "drop") |>
+  arrange(date)
+
+daily_deaths <- sim_daily |>
+  group_by(date, hai) |>
+  summarise(value = sum(deaths_day), .groups = "drop") |>
+  arrange(date)
+
+daily_dalys <- sim_daily |>
+  group_by(date, hai) |>
+  summarise(value = sum(dalys_day), .groups = "drop") |>
+  arrange(date)
+
+subplot(
+  plot_ly(daily_cases, x = ~date, y = ~value, 
+          color = ~hai, type = "scatter", mode = "lines") |>
+    layout(yaxis = list(title = "Cases"), xaxis = list(title = "")),
+  plot_ly(daily_deaths, x = ~date, y = ~value, color = ~hai, type = "scatter", mode = "lines") |>
+    layout(yaxis = list(title = "Deaths"), xaxis = list(title = "")),
+  plot_ly(daily_dalys, x = ~date, y = ~value, color = ~hai, type = "scatter", mode = "lines") |>
+    layout(yaxis = list(title = "DALYs"), xaxis = list(title = "Date")),
+  nrows = 3, shareX = TRUE, titleY = TRUE
+  ) |> 
+  layout(showlegend = TRUE)
+
+```
+
+## Pivotable monthly table
+
+```{r}
+sim_monthly |>
+  group_by(date, hai) |>
+  summarise(cases = sum(cases_month), .groups = "drop") |>
+  tidyr::pivot_wider(names_from = hai, values_from = cases) |>
+  head(12)
+```
+
