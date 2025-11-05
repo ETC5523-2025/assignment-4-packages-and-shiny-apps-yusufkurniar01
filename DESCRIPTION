@@ -1,6 +1,6 @@
 Package: yusufHAIGermany
 Title: Analysis of Germany HAI Burden (German PPS) with Shiny Explorer
-Version: 0.1.0
+Version: 0.1.2
 Authors@R: 
     person("Yusuf", "Romadhon", , "yrom002@student.monash.edu", role = c("aut", "cre"))
 Description: German PPS HAI burden data (2011) with 95% uncertainty
@@ -34,4 +34,3 @@ RoxygenNote: 7.3.3
 LazyData: true
 Config/testthat/edition: 3
 Remotes: github::ETC5523-2025/assignment-4-packages-and-shiny-apps-yusufkurniar01
-
