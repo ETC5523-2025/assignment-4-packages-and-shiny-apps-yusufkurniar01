@@ -5,11 +5,14 @@ Version: 0.0.1
 Imports:
     shiny,
     bslib,
+    ggplot2,
     plotly,
     dplyr,
     tidyr,
     lubridate,
-    DT,
+    scales,
+    glue,
+    shinyjs,
     yusufHAIGermany
 Remotes:
     ETC5523-2025/assignment-4-packages-and-shiny-apps-yusufkurniar01

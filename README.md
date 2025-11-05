@@ -4,16 +4,16 @@
 [![R-CMD-check](https://github.com/ETC5523-2025/assignment-4-packages-and-shiny-apps-yusufkurniar01/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ETC5523-2025/assignment-4-packages-and-shiny-apps-yusufkurniar01/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The **`yusufHAIGermany`** R package provides a reproducible simulation and visualization framework for exploring **Healthcare-Associated Infections (HAIs)** in Germany.  
-It is inspired by the *Eurosurveillance* study by Zacher et al. (2019),  
-*“Application of a new methodology and R package reveals a high burden of healthcare-associated infections (HAI) in Germany compared to the average in the European Union/European Economic Area, 2011–2012.”*  
-This package creates **daily**, **weekly**, and **monthly** simulated datasets calibrated from the 2011–2012 ECDC PPS (Point Prevalence Survey) data.
+The **`yusufHAIGermany`** R package offers a reproducible simulation and visualisation framework for examining **Healthcare-Associated Infections (HAIs)** in Germany.  
+It is inspired by the *Eurosurveillance* study by Zacher et al. (2019).  
+*“Application of a new methodology and R package reveals a high burden of healthcare-associated infections (HAI) in Germany compared to the average in the European Union/European Economic Area, 2011 – 2012.”*  
+This package generates **daily**, **weekly**, and **monthly** simulated datasets calibrated from the 2011 – 2012 ECDC PPS (Point Prevalence Survey) data.
 
 ---
 
 ## Installation
 
-You can install the latest development version from GitHub:
+The package can be installed by running the latest version from GitHub:
 
 ```r
 # install.packages("pak")
@@ -63,6 +63,7 @@ launch_app()
 | `deaths` | Estimated deaths | Numeric | Bar charts & annotations |
 | `dalys` | Disability-adjusted life years | Numeric | Heatmap or cumulative chart |
 | `freq` | Frequency level | Character | Filter selector |
+
 
 These simulations introduce mild seasonality and random variation to reflect uncertainty in real-world HAI burdens.
 
