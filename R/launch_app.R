@@ -12,7 +12,7 @@ launch_app <- function() {
   }
 
   #run the Shiny app
-  shiny::shinyAppDir(app_dir)
+  shiny::shinyAppDir(app_dir, options = list(launch.browser = TRUE))
 }
 
 
