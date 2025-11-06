@@ -1,6 +1,9 @@
 ---
-title: "germany-hai-explorer"
-output: rmarkdown::html_vignette
+title: "Germany HAI Source"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    df_print: paged
 vignette: >
   %\VignetteIndexEntry{germany-hai-explorer}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,6 +17,30 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, include=FALSE}
 library(yusufHAIGermany)
 ```
+
+**Application of a new methodology and R package reveals a high burden of healthcare-associated infections (HAI) in Germany compared to the average in the European Union/European Economic Area, 2011 to 2012**
+
+This package was inspired by the findings from Zacher et al. (2019), which examines the burden of healthcare-associated infections (HAIs) in Germany. It is motivated by the lack of national-level estimates despite Germany’s large hospital system. The authors rely on the European Centre for Disease Prevention and Control (ECDC) Point Prevalence Survey (PPS) 2011 – 2012, which offers detailed information on HAI prevalence, patient characteristics, and infection types across European acute-care hospitals.
+
+Using these PPS data, the study employs the Burden of Healthcare-Associated Infections (BHAI) modelling framework, which extrapolates prevalence data to estimate annual incidence and further calculates the number of cases, deaths, and disability-adjusted life years (DALYs). The analysis includes five major HAI types: HAP (Hospital-acquired pneumonia), BSI (Bloodstream infections), SSI (Surgical site infections), UTI (Urinary tract infections), and CDI (Clostridioides difficile infections).
+
+The results demonstrate that Germany faces a significant national burden, with HAP and BSI contributing disproportionately to deaths and DALYs despite lower case numbers than UTIs and SSIs. The study emphasises that Germany’s high overall burden is not due to unusually high prevalence rates but results from its large patient population and high hospital occupancy, which increase the total number of infections.
+
+The authors highlight the importance of converting point prevalence data into meaningful burden estimates to inform national policy, resource planning, and infection prevention efforts. They conclude by emphasising the need for ongoing surveillance, regular burden evaluations, and improved infection control measures to decrease preventable morbidity and mortality caused by HAIs in Germany.
+
+## Reference
+
+Gastmeier, P., Brunkhorst, F., Schrappe, M., Kern, W., & Geffers, C. (2010). How many nosocomial 
+infections are avoidable? Deutsche Medizinische Wochenschrift, 135(3), 91–93. 
+https://doi.org/10.1055/s-0029-1244823 
+
+Zacher, B., Haller, S., Willrich, N., Walter, J., Abu Sin, M., Cassini, A., Plachouras, D., Suetens, C., 
+Behnke, M., Gastmeier, P., Wieler, L. H., & Eckmanns, T. (2019). Application of a new 
+methodology and R package reveals a high burden of healthcare-associated infections (HAI) in 
+Germany compared to the average in the European Union/European Economic Area, 2011 to 
+2012. Eurosurveillance, 24(46). https://doi.org/10.2807/1560-7917.ES.2019.24.46.1900135 
+
+

@@ -13,27 +13,22 @@ template:
 navbar:
   structure:
     #menu structure
-    left:  [app, get-started, examples, reference, articles, news]
+    left:  [app, get-started, examples, articles, reference, news]
     right: [search, theme, github]
   components:
-    #dorpdown for the shiny dashboard
+    #dropdown for the shiny dashboard
     app:
-      text: "App"
-      menu:
-        - text: "Live App"
-          href: "https://yusufkurniar01.shinyapps.io/yusufHAIGermany/"
-          target: _blank
-        - text: "Run Locally"
-          href: reference/launch_app.html
-
+      text: "Shiny App"
+      href: "https://yusufkurniar01.shinyapps.io/yusufHAIGermany/"
+      target: _blank
     get-started: { text: Get started, href: articles/get-started.html }
     examples:    { text: Examples,   href: articles/examples.html }
-    reference:   { text: Reference,  href: reference/index.html }
     articles:
-      text: Data & Methods
+      text: Data
       menu:
-        - { text: Data description,  href: articles/data-description.html }
-        - { text: Simulation notes,  href: articles/germany-hai-explorer.html }
+        - { text: Data Description,  href: articles/data-description.html }
+        - { text: Project Source,  href: articles/germany-hai-explorer.html }
+    reference:   { text: Reference,  href: reference/index.html }
     news: { text: Change log, href: news/index.html }
 
     #placeholder used by the JS toggle

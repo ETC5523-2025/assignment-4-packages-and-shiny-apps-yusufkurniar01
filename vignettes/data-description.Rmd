@@ -1,6 +1,9 @@
 ---
 title: "Data Description"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    df_print: paged
 vignette: >
   %\VignetteIndexEntry{data-description}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, include=FALSE}
 library(yusufHAIGermany)
 library(dplyr)
 library(knitr)

@@ -22,7 +22,7 @@ library(lubridate)
 library(ggplot2)
 ```
 
-```{r load-data, message=FALSE}
+```{r load-data, message=FALSE, include=FALSE}
 #load the datasets from the installed package during vignette build
 if (!requireNamespace("yusufHAIGermany", quietly = TRUE)) {
   stop("Package not available in vignette build process.")

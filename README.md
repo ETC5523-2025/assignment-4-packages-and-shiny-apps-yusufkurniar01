@@ -106,15 +106,17 @@ sim_monthly |>
 
 ## Vignettes
 
-Full documentation is provided in four articles:
+Full documentation is provided here:
 
-- **Data description** — original PPS source and the three simulated tables; variables, units, and structure.  
+- **Shiny App**: provides the interactive dashboard to analyse the dataset.
+  See: [Shiny App](https://yusufkurniar01.shinyapps.io/yusufHAIGermany/)
+- **Data description**: original PPS source and the three simulated tables, variables, units, and structure.  
   See: [articles/data-description.html](articles/data-description.html)
 - **Get started**: required libraries, cleaning and simulation overview, and a quick tour of the data.  
   See: [articles/get-started.html](articles/get-started.html)
 - **Examples**: practical recipes to filter, aggregate, and plot the data for analysis.  
   See: [articles/examples.html](articles/examples.html)
-- **Germany HAI explorer**: a short analytical summary of the HAI Germany project and a link to the Shiny app.  
+- **Germany HAI explorer**: a short analytical summary of the HAI Germany project.  
   See: [articles/germany-hai-explorer.html](articles/germany-hai-explorer.html)
 
 To browse locally in R:
