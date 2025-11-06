@@ -7,7 +7,11 @@
 The **`yusufHAIGermany`** R package offers a reproducible simulation and visualisation framework for examining **Healthcare-Associated Infections (HAIs)** in Germany.  
 It is inspired by the *Eurosurveillance* study by Zacher et al. (2019).  
 *“Application of a new methodology and R package reveals a high burden of healthcare-associated infections (HAI) in Germany compared to the average in the European Union/European Economic Area, 2011 – 2012.”*  
+
 This package generates **daily**, **weekly**, and **monthly** simulated datasets calibrated from the 2011 – 2012 ECDC PPS (Point Prevalence Survey) data.
+
+This package can be accessed online, with the website explaining it, and the **shiny dashboard** can be reached via the **App** menu. Here is the link to access it:
+https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/
 
 ---
 
@@ -40,12 +44,14 @@ launch_app()
 ### App Features
 - Choose data frequency (**Monthly**, **Weekly**, or **Daily**)
 - Explore **time-series trends** of simulated infections
-- View **animated weekly bar race**, **daily heatmap**, and **monthly line chart**
-- Download results for reproducible analysis
+- View **distribution analysis metric**, **heatmap analysis metric**, and **animated monthly analysis** 
 
 ---
 
 ## Datasets
+
+The dataset is combination of orginal source and the simulated time series.
+See the detail in: [articles/data-description.html](articles/data-description.html)
 
 | Dataset | Description | Frequency | Data Type |
 |----------|-------------|------------|-----------|
@@ -98,41 +104,37 @@ sim_monthly |>
 
 ---
 
-## Vignette and Documentation
+## Vignettes
 
-To generate the full vignette explaining simulation and visualisation methods:
+Full documentation is provided in four articles:
 
-```r
-usethis::use_vignette("germany-hai-explorer")
-devtools::build_vignettes()
-```
+- **Data description** — original PPS source and the three simulated tables; variables, units, and structure.  
+  See: [articles/data-description.html](articles/data-description.html)
+- **Get started**: required libraries, cleaning and simulation overview, and a quick tour of the data.  
+  See: [articles/get-started.html](articles/get-started.html)
+- **Examples**: practical recipes to filter, aggregate, and plot the data for analysis.  
+  See: [articles/examples.html](articles/examples.html)
+- **Germany HAI explorer**: a short analytical summary of the HAI Germany project and a link to the Shiny app.  
+  See: [articles/germany-hai-explorer.html](articles/germany-hai-explorer.html)
 
-Once built, view with:
+To browse locally in R:
 
 ```r
 browseVignettes("yusufHAIGermany")
-```
 
-The vignette demonstrates:
-- Simulation process  
-- Professional time-series and animated charts  
-- Shiny app walkthrough  
+# or open directly:
+vignette("data-description", package = "yusufHAIGermany")
+vignette("examples", package = "yusufHAIGermany")
+vignette("germany-HAI-explorer", package = "yusufHAIGermany")
+vignette("get-started", package = "yusufHAIGermany")
+```
 
 ---
 
 ## Changelog
 
-All updates are documented in [**NEWS.md**](./NEWS.md).  
-Example format:
-
-```markdown
-# yusufHAIGermany 0.1.0
-- Initial release: simulation datasets and Shiny dashboard
-
-# Development version
-- Added vignette “Germany HAI Explorer”
-- Improved plot consistency and app layout
-```
+All updates are documented in [**NEWS.md**](news/index.html). 
+The latest version is 0.1.3, which includes the most recent integrated dataset and an updated Shiny dashboard.
 
 ---
 
@@ -141,26 +143,26 @@ Example format:
 - Package code © 2025 **Yusuf Romadhon**, licensed under **MIT License**.  
 - Data source: *ECDC PPS 2011–2012*, licensed under **CC BY 4.0**.
 
-Please cite both the original ECDC dataset and Zacher et al. (2019) when using derived results.
 
 ---
 
 ## Credits
 
 Developed for **ETC5523 – Communicating with Data** (Monash University, 2025).  
-Instructor: **Michael Lydeamore**  
-Built with `tidyverse`, `lubridate`, `usethis`, and `shiny`.
+Instructor: **Michael Lydeamore** & **Maliny Po** 
+
+**Built with:** `shiny`, `bslib`, `ggplot2`, `plotly`, `dplyr`, `tidyr`, `lubridate`, `scales`, `glue`, `yusufHAIGermany`.
+
+**Developed with:** `devtools`, `usethis`, `roxygen2`, `pkgdown`, `knitr`, `rmarkdown`, `rsconnect`.
 
 ---
 
 ## Recommended Workflow
 
-1. Install package → `pak::pak("ETC5523-2025/...")`  
-2. Launch app → `launch_app()`  
-3. View vignette → `browseVignettes("yusufHAIGermany")`  
-4. Check changelog → `NEWS.md`  
+1. Install package: `pak::pak("ETC5523-2025/...")`  
+2. Launch app: `launch_app()`  
+3. View vignette: `browseVignettes("yusufHAIGermany")`  
+4. Check changelog: `NEWS.md`  
 5. View documentation via pkgdown site
 
 ---
-
-*Note: The dataset is combination of orginal source from the pdf and the simulated time series*

@@ -43,11 +43,13 @@ This vignette gives a short tour of the package datasets and shows how to make q
 
 The package provides three simulation tables for HAIs in Germany (2011 – 2012):
 
-- sim_monthly: columns date, year, month, hai, cases_month, deaths_month, dalys_month
+- sim_monthly: date, year, month, hai, region, sex, cases_month, deaths_month, dalys_month.
 
-- sim_weekly: columns date, year, iso_week, hai, cases_week, deaths_week, dalys_week
+- sim_weekly: date, year, iso_week, hai, region, sex, cases_week, deaths_week, dalys_week.
 
-- sim_daily: columns date, year, yday, wday, hai, cases_day, deaths_day, dalys_day
+- sim_daily: date, year, yday, wday, hai, region, sex, cases_day, deaths_day, dalys_day.
+
+For details on the data source and variable definitions, see the [Data Description](articles/data-description.html) article, and the examples of common analysis steps are provided in the [Examples](articles/examples.html) article.
 
 ## Data at a glance
 
