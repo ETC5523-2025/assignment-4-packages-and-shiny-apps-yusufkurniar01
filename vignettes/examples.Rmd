@@ -1,5 +1,5 @@
 ---
-title: "Examples: Interactive Time Series"
+title: "Examples: Interactive Charts"
 output:
   rmarkdown::html_vignette:
     toc: true
