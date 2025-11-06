@@ -42,7 +42,7 @@ This vignette demonstrates how to load the package datasets and perform quick ch
 
 ## Data Access
 
-```{r load-data}
+```{r load-data, message=FALSE}
 #load the datasets from the installed package during vignette build
 if (!requireNamespace("yusufHAIGermany", quietly = TRUE)) {
   stop("Package not available in vignette build process.")
@@ -66,7 +66,7 @@ The package provides three simulation tables for HAIs in Germany (2011 – 2012)
 
 - sim_daily: date, year, yday, wday, hai, region, sex, cases_day, deaths_day, dalys_day.
 
-For details on the data source and variable definitions, see the [articles/data-description.html](articles/data-description.html), and the examples of common analysis steps are provided in the [articles/examples.html](articles/examples.html).
+For details on the data source and variable definitions, see the [Data Description](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/articles/data-description.html), and the examples of common analysis steps are provided in the [Examples](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/articles/examples.html).
 
 ## Review Data
 
@@ -179,7 +179,7 @@ ggplot() +
 
 According to the Figure 1, the total HAI cases remained high throughout 2011 – 2012, with a noticeable peak in mid-2011. UTI consistently made up the largest share of the monthly burden, while CDI contributed the smallest proportion. The overall pattern remains stable, with seasonal increases and decreases that seem consistent across infection types.
 
-For more information regarding the analysis, please check the live Shiny dashboard [App](https://yusufkurniar01.shinyapps.io/yusufHAIGermany/) and [articles/examples.html](articles/examples.html).
+For more information regarding the analysis, please check the live Shiny dashboard [App](https://yusufkurniar01.shinyapps.io/yusufHAIGermany/) and [Examples](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/articles/examples.html).
 
 ## Tooling Notes
 

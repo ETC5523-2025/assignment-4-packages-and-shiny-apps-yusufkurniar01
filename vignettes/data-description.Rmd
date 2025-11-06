@@ -1,5 +1,5 @@
 ---
-title: "data-description"
+title: "Data Description"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{data-description}
@@ -16,6 +16,121 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(yusufHAIGermany)
+library(dplyr)
+library(knitr)
+library(readr)
 ```
 
-The original PPS snapshot (2011) provides total counts and uncertainty by HAI category. Monthly values for 2011 – 2012 are simulated by distributing annual totals across months with mild winter seasonality and some random variation. Weekly values are estimated by dividing each month into ISO weeks, using a smooth within-month weighting profile. Daily values are calculated by dividing each week into seven days, with a slight weekday effect. All simulations ensure non-negativity and stay within plausible ranges relative to the original totals.
+**Purpose**
+
+This vignette details the structure, preparation, and simulation of datasets included in the yusufHAIGermany package. It describes the original source tables, the cleaning steps carried out, and the creation of harmonised monthly, weekly, and daily series used throughout the analysis vignettes. The aim is to provide transparency about data origins and to facilitate reproducibility.
+
+## Original Dataset
+
+The original dataset was manually collected from the GHAI (Global Healthcare-Associated Infections) journal report for Germany (2011–2012). The report offers annual totals for five major infection categories: HAP, SSI, BSI, UTI, and CDI. Values include cases, deaths, and DALYs, with details by region (Germany versus EU/EEA) and sex where available.
+
+These extracted values serve as the foundation for the simulation framework. Since the journal reports only aggregate annual totals, additional temporal detail had to be generated through synthetic, rule-based simulation.
+
+
+```{r}
+orig_cols <- tribble(
+~Variable, ~Description, ~Type,
+"year", "Calendar year of report (2011–2012)", "integer",
+"region", "EU/EEA or Germany", "character",
+"hai", "HAI category (HAP, SSI, BSI, UTI, CDI)", "character",
+"sex", "Male or Female (if reported)", "character",
+"cases", "Annual total cases", "numeric",
+"deaths", "Annual total deaths", "numeric",
+"dalys", "Annual DALYs", "numeric"
+)
+
+kable(orig_cols, caption = "Table 1: Variables in the Original Extracted Dataset")
+```
+
+## Cleaning and Simulation Process
+
+- **Standardisation of category names**: Infection types were harmonised across all source files.
+- **Consistency checks**: Totals were validated to ensure that no missing values or structural inconsistencies existed.
+- **Creation of temporal structure**: Because only annual values were available, synthetic frequency-specific series were generated. Monthly is proportionally allocated using infection-specific seasonal pattern, weekly is distributed using ISO week structure, and daily is generated using low-variance random noise around weekly means.
+- **Reproducible simulation rules**: UTI assigned strong seasonality (higher in summer), HAP and SSI assigned mild winter peaks, o	CDI allocated mild autumn variation, and o	Random noise applied with controlled fixed seeds.
+
+All simulation scripts are included in the package to maintain reproducibility.
+
+## Simulation Output Table
+
+The simulation generated three consistent, tidy time-series datasets: monthly, weekly, and daily.
+Each includes harmonised fields for year, date, infection type, counts, and burden metrics.
+
+### Monthly Simulated Data
+
+Synthetic monthly distributions were created for each HAI group to accurately reflect seasonal patterns while precisely matching the journal’s annual totals.
+
+```{r}
+monthly_cols <- tribble(
+~Variable,        ~Description,                                    ~Type,
+"date",           "First day of each month",                       "Date",
+"year",           "Calendar year",                                 "integer",
+"month",          "Month number (1–12)",                           "integer",
+"hai",            "HAI category",                                  "character",
+"region",         "EU/EEA or Germany",                             "character",
+"sex",            "Male or Female (if applicable)",                "character",
+"cases_month",    "Simulated monthly cases",                       "numeric",
+"deaths_month",   "Simulated monthly deaths",                      "numeric",
+"dalys_month",    "Simulated monthly DALYs",                       "numeric"
+)
+
+kable(monthly_cols, caption = "Table 2: Variables in the Monthly Simulated Dataset")
+
+```
+
+### Weekly Simulated Data
+
+Weekly counts were calculated using ISO week standards to ensure epidemiological consistency. Weekly figures accurately sum up to the monthly and yearly totals.
+
+```{r}
+weekly_cols <- tribble(
+~Variable,        ~Description,                                      ~Type,
+"date",           "Start date of ISO week",                           "Date",
+"year",           "Calendar year",                                    "integer",
+"iso_week",       "ISO week number (1–52/53)",                        "integer",
+"hai",            "HAI category",                                     "character",
+"region",         "EU/EEA or Germany",                                "character",
+"sex",            "Male or Female",                                   "character",
+"cases_week",     "Simulated weekly cases",                           "numeric",
+"deaths_week",    "Simulated weekly deaths",                          "numeric",
+"dalys_week",     "Simulated weekly DALYs",                           "numeric"
+)
+
+kable(weekly_cols, caption = "Table 3: Variables in the Weekly Simulated Dataset")
+
+```
+
+### Daily Simulated Data
+
+Daily values were produced by allocating weekly totals with low-variance jitter, ensuring smooth short-term trends without altering the overall burden.
+
+```{r}
+daily_cols <- tribble(
+~Variable,        ~Description,                                      ~Type,
+"date",           "Daily date stamp",                                 "Date",
+"year",           "Calendar year",                                    "integer",
+"yday",           "Day of year (1–365/366)",                          "integer",
+"wday",           "Day of week (1–7)",                                "integer",
+"hai",            "HAI category",                                     "character",
+"region",         "EU/EEA or Germany",                                "character",
+"sex",            "Male or Female",                                   "character",
+"cases_day",      "Simulated daily cases",                            "numeric",
+"deaths_day",     "Simulated daily deaths",                           "numeric",
+"dalys_day",      "Simulated daily DALYs",                            "numeric"
+)
+
+kable(daily_cols, caption = "Table 4: Variables in the Daily Simulated Dataset")
+
+```
+
+## Summary
+
+Overall, the simulation framework generates a coherent, multi-frequency dataset aligned with epidemiological practices, enabling flexible analysis across monthly, weekly, and daily time frames. By starting from validated journal totals and applying structured synthetic rules, the resulting datasets are stable, internally consistent, and suitable for time-series visualisation, comparative analysis, and workload modelling. Additionally, the license used for this dataset is the Creative Commons Attribution 4.0 International License (CC BY 4.0) as described on the [License Page](https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/LICENSE.html).
+
+
+
