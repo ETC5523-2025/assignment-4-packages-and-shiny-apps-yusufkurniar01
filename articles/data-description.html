@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>data-description • yusufHAIGermany</title>
+<title>Data Description • yusufHAIGermany</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Inter-0.4.10/font.css" rel="stylesheet">
@@ -13,7 +13,7 @@
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<script src="../extra.js"></script><meta property="og:title" content="data-description">
+<script src="../extra.js"></script><meta property="og:title" content="Data Description">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -70,7 +70,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>data-description</h1>
+      <h1>Data Description</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/ETC5523-2025/assignment-4-packages-and-shiny-apps-yusufkurniar01/blob/main/vignettes/data-description.Rmd" class="external-link"><code>vignettes/data-description.Rmd</code></a></small>
@@ -80,17 +80,383 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/">yusufHAIGermany</a></span><span class="op">)</span></span></code></pre></div>
-<p>The original PPS snapshot (2011) provides total counts and
-uncertainty by HAI category. Monthly values for 2011 – 2012 are
-simulated by distributing annual totals across months with mild winter
-seasonality and some random variation. Weekly values are estimated by
-dividing each month into ISO weeks, using a smooth within-month
-weighting profile. Daily values are calculated by dividing each week
-into seven days, with a slight weekday effect. All simulations ensure
-non-negativity and stay within plausible ranges relative to the original
-totals.</p>
-  </main>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/">yusufHAIGermany</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span></span></code></pre></div>
+<p><strong>Purpose</strong></p>
+<p>This vignette details the structure, preparation, and simulation of
+datasets included in the yusufHAIGermany package. It describes the
+original source tables, the cleaning steps carried out, and the creation
+of harmonised monthly, weekly, and daily series used throughout the
+analysis vignettes. The aim is to provide transparency about data
+origins and to facilitate reproducibility.</p>
+<div class="section level2">
+<h2 id="original-dataset">Original Dataset<a class="anchor" aria-label="anchor" href="#original-dataset"></a>
+</h2>
+<p>The original dataset was manually collected from the GHAI (Global
+Healthcare-Associated Infections) journal report for Germany
+(2011–2012). The report offers annual totals for five major infection
+categories: HAP, SSI, BSI, UTI, and CDI. Values include cases, deaths,
+and DALYs, with details by region (Germany versus EU/EEA) and sex where
+available.</p>
+<p>These extracted values serve as the foundation for the simulation
+framework. Since the journal reports only aggregate annual totals,
+additional temporal detail had to be generated through synthetic,
+rule-based simulation.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">orig_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span><span class="op">~</span><span class="va">Variable</span>, <span class="op">~</span><span class="va">Description</span>, <span class="op">~</span><span class="va">Type</span>,</span>
+<span><span class="st">"year"</span>, <span class="st">"Calendar year of report (2011–2012)"</span>, <span class="st">"integer"</span>,</span>
+<span><span class="st">"region"</span>, <span class="st">"EU/EEA or Germany"</span>, <span class="st">"character"</span>,</span>
+<span><span class="st">"hai"</span>, <span class="st">"HAI category (HAP, SSI, BSI, UTI, CDI)"</span>, <span class="st">"character"</span>,</span>
+<span><span class="st">"sex"</span>, <span class="st">"Male or Female (if reported)"</span>, <span class="st">"character"</span>,</span>
+<span><span class="st">"cases"</span>, <span class="st">"Annual total cases"</span>, <span class="st">"numeric"</span>,</span>
+<span><span class="st">"deaths"</span>, <span class="st">"Annual total deaths"</span>, <span class="st">"numeric"</span>,</span>
+<span><span class="st">"dalys"</span>, <span class="st">"Annual DALYs"</span>, <span class="st">"numeric"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">orig_cols</span>, caption <span class="op">=</span> <span class="st">"Table 1: Variables in the Original Extracted Dataset"</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Table 1: Variables in the Original Extracted Dataset</caption>
+<thead><tr class="header">
+<th align="left">Variable</th>
+<th align="left">Description</th>
+<th align="left">Type</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">year</td>
+<td align="left">Calendar year of report (2011–2012)</td>
+<td align="left">integer</td>
+</tr>
+<tr class="even">
+<td align="left">region</td>
+<td align="left">EU/EEA or Germany</td>
+<td align="left">character</td>
+</tr>
+<tr class="odd">
+<td align="left">hai</td>
+<td align="left">HAI category (HAP, SSI, BSI, UTI, CDI)</td>
+<td align="left">character</td>
+</tr>
+<tr class="even">
+<td align="left">sex</td>
+<td align="left">Male or Female (if reported)</td>
+<td align="left">character</td>
+</tr>
+<tr class="odd">
+<td align="left">cases</td>
+<td align="left">Annual total cases</td>
+<td align="left">numeric</td>
+</tr>
+<tr class="even">
+<td align="left">deaths</td>
+<td align="left">Annual total deaths</td>
+<td align="left">numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">dalys</td>
+<td align="left">Annual DALYs</td>
+<td align="left">numeric</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="cleaning-and-simulation-process">Cleaning and Simulation Process<a class="anchor" aria-label="anchor" href="#cleaning-and-simulation-process"></a>
+</h2>
+<ul>
+<li>
+<strong>Standardisation of category names</strong>: Infection types
+were harmonised across all source files.</li>
+<li>
+<strong>Consistency checks</strong>: Totals were validated to ensure
+that no missing values or structural inconsistencies existed.</li>
+<li>
+<strong>Creation of temporal structure</strong>: Because only annual
+values were available, synthetic frequency-specific series were
+generated. Monthly is proportionally allocated using infection-specific
+seasonal pattern, weekly is distributed using ISO week structure, and
+daily is generated using low-variance random noise around weekly
+means.</li>
+<li>
+<strong>Reproducible simulation rules</strong>: UTI assigned strong
+seasonality (higher in summer), HAP and SSI assigned mild winter peaks,
+o CDI allocated mild autumn variation, and o Random noise applied with
+controlled fixed seeds.</li>
+</ul>
+<p>All simulation scripts are included in the package to maintain
+reproducibility.</p>
+</div>
+<div class="section level2">
+<h2 id="simulation-output-table">Simulation Output Table<a class="anchor" aria-label="anchor" href="#simulation-output-table"></a>
+</h2>
+<p>The simulation generated three consistent, tidy time-series datasets:
+monthly, weekly, and daily. Each includes harmonised fields for year,
+date, infection type, counts, and burden metrics.</p>
+<div class="section level3">
+<h3 id="monthly-simulated-data">Monthly Simulated Data<a class="anchor" aria-label="anchor" href="#monthly-simulated-data"></a>
+</h3>
+<p>Synthetic monthly distributions were created for each HAI group to
+accurately reflect seasonal patterns while precisely matching the
+journal’s annual totals.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">monthly_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span><span class="op">~</span><span class="va">Variable</span>,        <span class="op">~</span><span class="va">Description</span>,                                    <span class="op">~</span><span class="va">Type</span>,</span>
+<span><span class="st">"date"</span>,           <span class="st">"First day of each month"</span>,                       <span class="st">"Date"</span>,</span>
+<span><span class="st">"year"</span>,           <span class="st">"Calendar year"</span>,                                 <span class="st">"integer"</span>,</span>
+<span><span class="st">"month"</span>,          <span class="st">"Month number (1–12)"</span>,                           <span class="st">"integer"</span>,</span>
+<span><span class="st">"hai"</span>,            <span class="st">"HAI category"</span>,                                  <span class="st">"character"</span>,</span>
+<span><span class="st">"region"</span>,         <span class="st">"EU/EEA or Germany"</span>,                             <span class="st">"character"</span>,</span>
+<span><span class="st">"sex"</span>,            <span class="st">"Male or Female (if applicable)"</span>,                <span class="st">"character"</span>,</span>
+<span><span class="st">"cases_month"</span>,    <span class="st">"Simulated monthly cases"</span>,                       <span class="st">"numeric"</span>,</span>
+<span><span class="st">"deaths_month"</span>,   <span class="st">"Simulated monthly deaths"</span>,                      <span class="st">"numeric"</span>,</span>
+<span><span class="st">"dalys_month"</span>,    <span class="st">"Simulated monthly DALYs"</span>,                       <span class="st">"numeric"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">monthly_cols</span>, caption <span class="op">=</span> <span class="st">"Table 2: Variables in the Monthly Simulated Dataset"</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Table 2: Variables in the Monthly Simulated Dataset</caption>
+<thead><tr class="header">
+<th align="left">Variable</th>
+<th align="left">Description</th>
+<th align="left">Type</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">date</td>
+<td align="left">First day of each month</td>
+<td align="left">Date</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="left">Calendar year</td>
+<td align="left">integer</td>
+</tr>
+<tr class="odd">
+<td align="left">month</td>
+<td align="left">Month number (1–12)</td>
+<td align="left">integer</td>
+</tr>
+<tr class="even">
+<td align="left">hai</td>
+<td align="left">HAI category</td>
+<td align="left">character</td>
+</tr>
+<tr class="odd">
+<td align="left">region</td>
+<td align="left">EU/EEA or Germany</td>
+<td align="left">character</td>
+</tr>
+<tr class="even">
+<td align="left">sex</td>
+<td align="left">Male or Female (if applicable)</td>
+<td align="left">character</td>
+</tr>
+<tr class="odd">
+<td align="left">cases_month</td>
+<td align="left">Simulated monthly cases</td>
+<td align="left">numeric</td>
+</tr>
+<tr class="even">
+<td align="left">deaths_month</td>
+<td align="left">Simulated monthly deaths</td>
+<td align="left">numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">dalys_month</td>
+<td align="left">Simulated monthly DALYs</td>
+<td align="left">numeric</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="weekly-simulated-data">Weekly Simulated Data<a class="anchor" aria-label="anchor" href="#weekly-simulated-data"></a>
+</h3>
+<p>Weekly counts were calculated using ISO week standards to ensure
+epidemiological consistency. Weekly figures accurately sum up to the
+monthly and yearly totals.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">weekly_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span><span class="op">~</span><span class="va">Variable</span>,        <span class="op">~</span><span class="va">Description</span>,                                      <span class="op">~</span><span class="va">Type</span>,</span>
+<span><span class="st">"date"</span>,           <span class="st">"Start date of ISO week"</span>,                           <span class="st">"Date"</span>,</span>
+<span><span class="st">"year"</span>,           <span class="st">"Calendar year"</span>,                                    <span class="st">"integer"</span>,</span>
+<span><span class="st">"iso_week"</span>,       <span class="st">"ISO week number (1–52/53)"</span>,                        <span class="st">"integer"</span>,</span>
+<span><span class="st">"hai"</span>,            <span class="st">"HAI category"</span>,                                     <span class="st">"character"</span>,</span>
+<span><span class="st">"region"</span>,         <span class="st">"EU/EEA or Germany"</span>,                                <span class="st">"character"</span>,</span>
+<span><span class="st">"sex"</span>,            <span class="st">"Male or Female"</span>,                                   <span class="st">"character"</span>,</span>
+<span><span class="st">"cases_week"</span>,     <span class="st">"Simulated weekly cases"</span>,                           <span class="st">"numeric"</span>,</span>
+<span><span class="st">"deaths_week"</span>,    <span class="st">"Simulated weekly deaths"</span>,                          <span class="st">"numeric"</span>,</span>
+<span><span class="st">"dalys_week"</span>,     <span class="st">"Simulated weekly DALYs"</span>,                           <span class="st">"numeric"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">weekly_cols</span>, caption <span class="op">=</span> <span class="st">"Table 3: Variables in the Weekly Simulated Dataset"</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Table 3: Variables in the Weekly Simulated Dataset</caption>
+<thead><tr class="header">
+<th align="left">Variable</th>
+<th align="left">Description</th>
+<th align="left">Type</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">date</td>
+<td align="left">Start date of ISO week</td>
+<td align="left">Date</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="left">Calendar year</td>
+<td align="left">integer</td>
+</tr>
+<tr class="odd">
+<td align="left">iso_week</td>
+<td align="left">ISO week number (1–52/53)</td>
+<td align="left">integer</td>
+</tr>
+<tr class="even">
+<td align="left">hai</td>
+<td align="left">HAI category</td>
+<td align="left">character</td>
+</tr>
+<tr class="odd">
+<td align="left">region</td>
+<td align="left">EU/EEA or Germany</td>
+<td align="left">character</td>
+</tr>
+<tr class="even">
+<td align="left">sex</td>
+<td align="left">Male or Female</td>
+<td align="left">character</td>
+</tr>
+<tr class="odd">
+<td align="left">cases_week</td>
+<td align="left">Simulated weekly cases</td>
+<td align="left">numeric</td>
+</tr>
+<tr class="even">
+<td align="left">deaths_week</td>
+<td align="left">Simulated weekly deaths</td>
+<td align="left">numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">dalys_week</td>
+<td align="left">Simulated weekly DALYs</td>
+<td align="left">numeric</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="daily-simulated-data">Daily Simulated Data<a class="anchor" aria-label="anchor" href="#daily-simulated-data"></a>
+</h3>
+<p>Daily values were produced by allocating weekly totals with
+low-variance jitter, ensuring smooth short-term trends without altering
+the overall burden.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">daily_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span><span class="op">~</span><span class="va">Variable</span>,        <span class="op">~</span><span class="va">Description</span>,                                      <span class="op">~</span><span class="va">Type</span>,</span>
+<span><span class="st">"date"</span>,           <span class="st">"Daily date stamp"</span>,                                 <span class="st">"Date"</span>,</span>
+<span><span class="st">"year"</span>,           <span class="st">"Calendar year"</span>,                                    <span class="st">"integer"</span>,</span>
+<span><span class="st">"yday"</span>,           <span class="st">"Day of year (1–365/366)"</span>,                          <span class="st">"integer"</span>,</span>
+<span><span class="st">"wday"</span>,           <span class="st">"Day of week (1–7)"</span>,                                <span class="st">"integer"</span>,</span>
+<span><span class="st">"hai"</span>,            <span class="st">"HAI category"</span>,                                     <span class="st">"character"</span>,</span>
+<span><span class="st">"region"</span>,         <span class="st">"EU/EEA or Germany"</span>,                                <span class="st">"character"</span>,</span>
+<span><span class="st">"sex"</span>,            <span class="st">"Male or Female"</span>,                                   <span class="st">"character"</span>,</span>
+<span><span class="st">"cases_day"</span>,      <span class="st">"Simulated daily cases"</span>,                            <span class="st">"numeric"</span>,</span>
+<span><span class="st">"deaths_day"</span>,     <span class="st">"Simulated daily deaths"</span>,                           <span class="st">"numeric"</span>,</span>
+<span><span class="st">"dalys_day"</span>,      <span class="st">"Simulated daily DALYs"</span>,                            <span class="st">"numeric"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">daily_cols</span>, caption <span class="op">=</span> <span class="st">"Table 4: Variables in the Daily Simulated Dataset"</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<caption>Table 4: Variables in the Daily Simulated Dataset</caption>
+<thead><tr class="header">
+<th align="left">Variable</th>
+<th align="left">Description</th>
+<th align="left">Type</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">date</td>
+<td align="left">Daily date stamp</td>
+<td align="left">Date</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="left">Calendar year</td>
+<td align="left">integer</td>
+</tr>
+<tr class="odd">
+<td align="left">yday</td>
+<td align="left">Day of year (1–365/366)</td>
+<td align="left">integer</td>
+</tr>
+<tr class="even">
+<td align="left">wday</td>
+<td align="left">Day of week (1–7)</td>
+<td align="left">integer</td>
+</tr>
+<tr class="odd">
+<td align="left">hai</td>
+<td align="left">HAI category</td>
+<td align="left">character</td>
+</tr>
+<tr class="even">
+<td align="left">region</td>
+<td align="left">EU/EEA or Germany</td>
+<td align="left">character</td>
+</tr>
+<tr class="odd">
+<td align="left">sex</td>
+<td align="left">Male or Female</td>
+<td align="left">character</td>
+</tr>
+<tr class="even">
+<td align="left">cases_day</td>
+<td align="left">Simulated daily cases</td>
+<td align="left">numeric</td>
+</tr>
+<tr class="odd">
+<td align="left">deaths_day</td>
+<td align="left">Simulated daily deaths</td>
+<td align="left">numeric</td>
+</tr>
+<tr class="even">
+<td align="left">dalys_day</td>
+<td align="left">Simulated daily DALYs</td>
+<td align="left">numeric</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
+<p>Overall, the simulation framework generates a coherent,
+multi-frequency dataset aligned with epidemiological practices, enabling
+flexible analysis across monthly, weekly, and daily time frames. By
+starting from validated journal totals and applying structured synthetic
+rules, the resulting datasets are stable, internally consistent, and
+suitable for time-series visualisation, comparative analysis, and
+workload modelling. Additionally, the license used for this dataset is
+the Creative Commons Attribution 4.0 International License (CC BY 4.0)
+as described on the <a href="https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/LICENSE.html" class="external-link">License
+Page</a>.</p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
