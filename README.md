@@ -148,7 +148,7 @@ The latest version is 0.1.3, which includes the most recent integrated dataset a
 
 ## Credits
 
-Developed for **ETC5523 – Communicating with Data** (Monash University, 2025).  
+Developed for **ETC5523 – Communicating with Dashboard** (Monash University, 2025).  
 Instructor: **Michael Lydeamore** & **Maliny Po** 
 
 **Built with:** `shiny`, `bslib`, `ggplot2`, `plotly`, `dplyr`, `tidyr`, `lubridate`, `scales`, `glue`, `yusufHAIGermany`.

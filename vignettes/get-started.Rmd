@@ -1,27 +1,49 @@
 ---
-title: "Get Started with yusufHAIGermany"
+title: "Get started with yusufHAIGermany"
 output:
   rmarkdown::html_vignette:
     toc: true
     df_print: paged
 vignette: >
-  %\VignetteIndexEntry{Get Started with yusufHAIGermany}
+  %\VignetteIndexEntry{Get started with yusufHAIGermany}
   %\VignetteEngine{knitr::rmarkdown}
-  %\usepackage[utf8]{inputenc}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
-  echo = TRUE, message = FALSE, warning = FALSE,
-  fig.width = 9, fig.height = 5.2, fig.align = "center"
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 9,
+  fig.height = 5.2,
+  fig.align = "center"
 )
+options(knitr.kable.NA = "")
 library(dplyr)
 library(tidyr)
 library(plotly)
 library(lubridate)
+library(knitr)
+library(bookdown)
+library(ggplot2)
 ```
 
-```{r load-data, message=FALSE}
+**Purpose**
+
+This vignette demonstrates how to load the package datasets and perform quick checks to confirm the structure and content. It uses concise, reproducible examples you can adapt for exploratory work and quality control.
+
+**What's inside:**
+
+- **Data access**. Load sim_monthly, sim_weekly, and sim_daily and verify they are present.
+- **Review structure**. Print concise schema for each dataset.
+- **Quick visuals and summaries**. A monthly trend line.
+- **Tooling notes**. Short explanations of the build and development libraries.
+
+
+## Data Access
+
+```{r load-data}
 #load the datasets from the installed package during vignette build
 if (!requireNamespace("yusufHAIGermany", quietly = TRUE)) {
   stop("Package not available in vignette build process.")
@@ -37,11 +59,7 @@ stopifnot(
 )
 ```
 
-## Overview
-
-This vignette gives a short tour of the package datasets and shows how to make quick, interactive checks.
-
-The package provides three simulation tables for HAIs in Germany (2011 – 2012):
+The package provides three simulation tables for HAIs in Germany (2011 – 2012) and was cleaned to get these formats:
 
 - sim_monthly: date, year, month, hai, region, sex, cases_month, deaths_month, dalys_month.
 
@@ -49,65 +67,136 @@ The package provides three simulation tables for HAIs in Germany (2011 – 2012)
 
 - sim_daily: date, year, yday, wday, hai, region, sex, cases_day, deaths_day, dalys_day.
 
-For details on the data source and variable definitions, see the [Data Description](articles/data-description.html) article, and the examples of common analysis steps are provided in the [Examples](articles/examples.html) article.
+For details on the data source and variable definitions, see the [articles/data-description.html](articles/data-description.html), and the examples of common analysis steps are provided in the [articles/examples.html](articles/examples.html).
 
-## Data at a glance
+## Review Data
 
-```{r}
+This glimpse() function helps understand the data type and its appearance, making the process easier for IDA and EDA.
+
+```{r, eval=FALSE}
 dplyr::glimpse(sim_monthly)
 dplyr::glimpse(sim_weekly)
 dplyr::glimpse(sim_daily)
 ```
 
-## Monthly totals by infection type
+## Quick Visualisation and Summaries
+
+hese are the example tables and figures that can be used to start analysing the data:
+
+**Summary table by year, region, metric, and HAI**
 
 ```{r}
-p_month <- sim_monthly |>
-  mutate(month_lab = format(as.Date(date), "%b %Y")) |>
-  group_by(date, hai) |>
-  summarise(cases = sum(cases_month), .groups = "drop") |>
-  arrange(date) |>
-  plot_ly(x = ~date, y = ~cases, 
-          color = ~hai, type = "scatter", 
-          mode = "lines",
-          hovertemplate = paste("%{x|%b %Y}",
-                                "%{fullData.name}: %{y:,.0f} cases")
-          ) |>
-  layout(
-    yaxis = list(title = "Cases (monthly)"),
-    xaxis = list(title = "Date")
+# HAI categories
+hai_levels <- sort(unique(sim_monthly$hai))
+
+# Build table for each metric
+summary_region <- sim_monthly |>
+  group_by(year, region, hai) |>
+  summarise(
+    cases  = sum(cases_month),
+    deaths = sum(deaths_month),
+    dalys  = sum(dalys_month),
+    .groups = "drop"
+  ) |>
+  pivot_longer(cols = c(cases, deaths, dalys),
+               names_to = "metric",
+               values_to = "value") |>
+  pivot_wider(
+    names_from = hai,
+    values_from = value,
+    values_fill = 0
+  ) |>
+  arrange(year, region, metric)
+
+knitr::kable(
+  summary_region,
+  caption = "Summary by year, region, and metric, with HAI categories as columns."
 )
 
-p_month
 ```
 
-## Top infection type by month
+According to Table 1, Germany consistently reports higher case counts than the overall EU/EEA, with UTI and HAP making up the largest portions in both years. DALYs follow a similar pattern, showing that the burden is driven by both frequency and severity in these categories. Deaths remain significantly lower across all groups, but the distribution across HAI types reflects the same patterns seen in cases and DALYs.
 
 ```{r}
-top_tbl <- sim_monthly |>
-  group_by(date, hai) |>
-  summarise(cases = sum(cases_month), .groups = "drop") |>
-  group_by(date) |>
-  slice_max(order_by = cases, n = 1, with_ties = FALSE) |>
-  ungroup() |>
-  arrange(date)
-
-top_tbl
-```
-
-## Annual totals
-
-```{r}
-annual <- sim_monthly |>
-  mutate(yr = year(as.Date(date))) |>
-  group_by(yr) |>
+summary_sex <- sim_monthly |>
+  group_by(year, sex, hai) |>
   summarise(
-    cases = sum(cases_month),
+    cases  = sum(cases_month),
     deaths = sum(deaths_month),
-    dalys = sum(dalys_month),
+    dalys  = sum(dalys_month),
     .groups = "drop"
-    )
+  ) |>
+  pivot_longer(cols = c(cases, deaths, dalys),
+               names_to = "metric",
+               values_to = "value") |>
+  pivot_wider(
+    names_from = hai,
+    values_from = value,
+    values_fill = 0
+  ) |>
+  arrange(year, sex, metric)
 
-annual
+knitr::kable(
+  summary_sex,
+  caption = "Summary by year, sex, and metric, with HAI categories as columns."
+)
 ```
 
+According to Table 2, male patients consistently show higher case counts and DALYs across all HAI categories, reflecting a greater infection burden compared with females in both years. The distribution across HAP, SSI, BSI, UTI, and CDI remains stable between sexes, indicating similar clinical patterns despite differences in overall magnitude. Deaths follow the same trend, with male totals slightly exceeding female totals across all HAI types.
+
+**Monthly Total HAI cases with Composition by Infection**
+
+```{r fig-hai-1, fig.cap="Monthly total HAI cases with composition by infection type, 2011–2012"}
+monthly_totals <- sim_monthly |>
+  dplyr::group_by(date) |>
+  dplyr::summarise(total_cases = sum(cases_month), .groups = "drop")
+
+monthly_mix <- sim_monthly |>
+  dplyr::group_by(date, hai) |>
+  dplyr::summarise(cases = sum(cases_month), .groups = "drop")
+
+peak_pt <- monthly_totals |> dplyr::slice_max(total_cases, n = 1)
+
+ggplot() +
+  geom_area(data = monthly_mix,
+            aes(x = as.Date(date), y = cases, fill = hai), alpha = 0.75) +
+  geom_line(data = monthly_totals,
+            aes(x = as.Date(date), y = total_cases), linewidth = 1.1) +
+  geom_point(data = peak_pt,
+             aes(x = as.Date(date), y = total_cases), size = 2) +
+  geom_text(data = peak_pt,
+            aes(x = as.Date(date), y = total_cases,
+                label = scales::comma(total_cases)),
+            vjust = -0.5, size = 3.2) +
+  scale_y_continuous(labels = scales::label_comma()) +
+  labs(x = "Date", y = "Cases (monthly)",
+       fill = "Infection type",
+       title = "Monthly HAI burden: Total and Composition") +
+  theme_minimal(base_size = 12) +
+  theme(plot.title = element_text(face = "bold"),
+        legend.position = "bottom")
+
+```
+
+According to the Figure 1, the total HAI cases remained high throughout 2011 – 2012, with a noticeable peak in mid-2011. UTI consistently made up the largest share of the monthly burden, while CDI contributed the smallest proportion. The overall pattern remains stable, with seasonal increases and decreases that seem consistent across infection types.
+
+For more information regarding the analysis, please check the live Shiny dashboard [App](https://yusufkurniar01.shinyapps.io/yusufHAIGermany/) and [articles/examples.html](articles/examples.html).
+
+## Tooling Notes
+
+This package is:
+
+Built with:
+
+- shiny and bslib: UI components and theming for interactive apps.
+- ggplot2 and plotly: Static and interactive charts for EDA and review.
+- dplyr, tidyr, lubridate, scales, glue: Data wrangling, date handling, formatting, and text utilities.
+- yusufHAIGermany: Package datasets and helpers.
+
+Developed with:
+
+- devtools, usethis: Package scaffolding, workflow, and checks.
+- roxygen2: In-source documentation and NAMESPACE generation.
+- pkgdown: Static documentation site for functions, articles, and examples.
+- knitr, rmarkdown: Reproducible vignettes and literate programming.
+- rsconnect: Deployment to shinyapps.io.
