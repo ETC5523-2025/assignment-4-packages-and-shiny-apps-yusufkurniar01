@@ -32,7 +32,18 @@ remotes::install_github("ETC5523-2025/assignment-4-packages-and-shiny-apps-yusuf
 
 ---
 
-## Run the App
+## Run the Live Shiny App
+
+The app provides the interactive dashboard to analyse the dataset. 
+
+See: [Shiny App](https://yusufkurniar01.shinyapps.io/yusufHAIGermany/)
+
+## Run the Shiny App Locally
+
+```r
+# install.packages("yusufHAIGermany")  # or devtools::install_local("path")
+yusufHAIGermany::launch_app()
+```
 
 Launch the built-in **Germany HAI Explorer** directly from your R console:
 
@@ -40,6 +51,7 @@ Launch the built-in **Germany HAI Explorer** directly from your R console:
 library(yusufHAIGermany)
 launch_app()
 ```
+
 
 ### App Features
 - Choose data frequency (**Monthly**, **Weekly**, or **Daily**)
@@ -108,8 +120,6 @@ sim_monthly |>
 
 Full documentation is provided here:
 
-- **Shiny App**: provides the interactive dashboard to analyse the dataset.
-  See: [Shiny App](https://yusufkurniar01.shinyapps.io/yusufHAIGermany/)
 - **Data description**: original PPS source and the three simulated tables, variables, units, and structure.  
   See: [articles/data-description.html](articles/data-description.html)
 - **Get started**: required libraries, cleaning and simulation overview, and a quick tour of the data.  

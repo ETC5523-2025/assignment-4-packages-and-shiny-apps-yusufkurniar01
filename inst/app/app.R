@@ -155,6 +155,11 @@ ui <- page_navbar(
                     selected = "Region × Sex"),
         hr(),
         helpText("Tip: switch Frequency to change time granularity.")
+    ),
+    hr(),
+    actionButton(
+      "help", "How to use",
+      class = "btn btn-sm btn-outline-primary w-100"
     )
   ),
 
@@ -165,6 +170,7 @@ ui <- page_navbar(
       card_header(textOutput("title_overview")),
       plotlyOutput("ts_violin", height = "520px"),
       card_body(
+        p(class = "text-muted small", textOutput("cap_overview")),
         p(class = "text-muted small", htmlOutput("ts_insight")),
         p(class = "small",          htmlOutput("ts_overall"))
       )
@@ -178,6 +184,7 @@ ui <- page_navbar(
       card_header(textOutput("title_heat")),
       plotlyOutput("heat", height = "560px"),
       card_body(
+        p(class = "text-muted small", textOutput("cap_heat")),
         p(class = "text-muted small", htmlOutput("heat_insight")),
         p(class = "small",          htmlOutput("heat_overall"))
       )
@@ -203,6 +210,7 @@ ui <- page_navbar(
         ),
         plotlyOutput("play_ts", height = "520px"),
         card_body(
+          p(class = "text-muted small", textOutput("cap_play")),
           p(class = "text-muted small", htmlOutput("play_insight")),
           p(class = "small",          htmlOutput("play_overall")),
           p(class = "text-muted small", "Note: This chart uses monthly data only for performance.")
@@ -246,6 +254,27 @@ server <- function(input, output, session) {
       d_from  = input$dates[1],
       d_to    = input$dates[2]
     )
+  })
+
+  #column description (help function)
+  observeEvent(input$help, {
+    showModal(modalDialog(
+      title = "How to use this explorer",
+      easyClose = TRUE, size = "m",
+      footer = modalButton("Close"),
+      HTML(paste0(
+        "<ul style='margin-left:-1rem'>",
+        "<li><b>Frequency</b>: switch time granularity (Monthly, Weekly, Daily).</li>",
+        "<li><b>Metric</b>: choose the outcome (Cases, Deaths, DALYs).</li>",
+        "<li><b>Infection types</b>: select HAP, SSI, BSI, UTI, CDI.</li>",
+        "<li><b>Date range</b>: limits the analysis window.</li>",
+        "<li><b>Sex</b>: filter Female/Male.</li>",
+        "<li><b>Facet by</b>: split charts by Region, Sex, or both.</li>",
+        "<li><b>Tabs</b>: Overview (distributions), Heatmap (intensity over time), ",
+        "HAI Movement (timeline with moving month marker).</li>",
+        "</ul>"
+      ))
+    ))
   })
 
   #overview (violin and jitter)
@@ -308,6 +337,20 @@ server <- function(input, output, session) {
   })
   output$heat_insight <- renderUI({ HTML(insight_text(filtered(), input$metric, input$facet_by)) })
   output$heat_overall <- renderUI({ HTML(overall_text(filtered(), input$metric)) })
+
+  #added description
+  output$cap_overview <- renderText({
+    glue("Distribution of {input$metric} by infection type with jittered points. Values reflect the selected {tolower(input$freq)} aggregation and current filters.")
+  })
+
+  output$cap_heat <- renderText({
+    gran <- if (input$freq == "Weekly") "ISO-week" else "month"
+    glue("Intensity of {input$metric} across {gran} by HAI. Darker tiles indicate higher counts under current filters.")
+  })
+
+  output$cap_play <- renderText({
+    glue("Monthly {input$metric} timeline by HAI. The slider sets the active month and the dots highlight its values.")
+  })
 
   #play tab: monthly only
   # Aggregate monthly once for current filters
