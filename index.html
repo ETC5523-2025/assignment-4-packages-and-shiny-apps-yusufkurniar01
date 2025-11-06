@@ -72,8 +72,9 @@
 <!-- badges: start -->
 
 <p>The <strong><code>yusufHAIGermany</code></strong> R package offers a reproducible simulation and visualisation framework for examining <strong>Healthcare-Associated Infections (HAIs)</strong> in Germany.<br>
-It is inspired by the <em>Eurosurveillance</em> study by Zacher et al. (2019).<br><em>“Application of a new methodology and R package reveals a high burden of healthcare-associated infections (HAI) in Germany compared to the average in the European Union/European Economic Area, 2011 – 2012.”</em><br>
-This package generates <strong>daily</strong>, <strong>weekly</strong>, and <strong>monthly</strong> simulated datasets calibrated from the 2011 – 2012 ECDC PPS (Point Prevalence Survey) data.</p>
+It is inspired by the <em>Eurosurveillance</em> study by Zacher et al. (2019).<br><em>“Application of a new methodology and R package reveals a high burden of healthcare-associated infections (HAI) in Germany compared to the average in the European Union/European Economic Area, 2011 – 2012.”</em></p>
+<p>This package generates <strong>daily</strong>, <strong>weekly</strong>, and <strong>monthly</strong> simulated datasets calibrated from the 2011 – 2012 ECDC PPS (Point Prevalence Survey) data.</p>
+<p>This package can be accessed online, with the website explaining it, and the <strong>shiny dashboard</strong> can be reached via the <strong>App</strong> menu. Here is the link to access it: <a href="https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/" class="external-link uri">https://etc5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/</a></p>
 <hr>
 </div>
 <div class="section level2">
@@ -101,9 +102,8 @@ This package generates <strong>daily</strong>, <strong>weekly</strong>, and <str
 <ul>
 <li>Choose data frequency (<strong>Monthly</strong>, <strong>Weekly</strong>, or <strong>Daily</strong>)</li>
 <li>Explore <strong>time-series trends</strong> of simulated infections</li>
-<li>View <strong>animated weekly bar race</strong>, <strong>daily heatmap</strong>, and <strong>monthly line chart</strong>
+<li>View <strong>distribution analysis metric</strong>, <strong>heatmap analysis metric</strong>, and <strong>animated monthly analysis</strong>
 </li>
-<li>Download results for reproducible analysis</li>
 </ul>
 <hr>
 </div>
@@ -111,6 +111,7 @@ This package generates <strong>daily</strong>, <strong>weekly</strong>, and <str
 <div class="section level2">
 <h2 id="datasets">Datasets<a class="anchor" aria-label="anchor" href="#datasets"></a>
 </h2>
+<p>The dataset is combination of orginal source and the simulated time series. See the detail in: <a href="articles/data-description.html">articles/data-description.html</a></p>
 <table class="table">
 <colgroup>
 <col width="21%">
@@ -231,31 +232,42 @@ This package generates <strong>daily</strong>, <strong>weekly</strong>, and <str
 <hr>
 </div>
 <div class="section level2">
-<h2 id="vignette-and-documentation">Vignette and Documentation<a class="anchor" aria-label="anchor" href="#vignette-and-documentation"></a>
+<h2 id="vignettes">Vignettes<a class="anchor" aria-label="anchor" href="#vignettes"></a>
 </h2>
-<p>To generate the full vignette explaining simulation and visualisation methods:</p>
+<p>Full documentation is provided in four articles:</p>
+<ul>
+<li>
+<strong>Data description</strong> — original PPS source and the three simulated tables; variables, units, and structure.<br>
+See: <a href="articles/data-description.html">articles/data-description.html</a>
+</li>
+<li>
+<strong>Get started</strong>: required libraries, cleaning and simulation overview, and a quick tour of the data.<br>
+See: <a href="articles/get-started.html">articles/get-started.html</a>
+</li>
+<li>
+<strong>Examples</strong>: practical recipes to filter, aggregate, and plot the data for analysis.<br>
+See: <a href="articles/examples.html">articles/examples.html</a>
+</li>
+<li>
+<strong>Germany HAI explorer</strong>: a short analytical summary of the HAI Germany project and a link to the Shiny app.<br>
+See: <a href="articles/germany-hai-explorer.html">articles/germany-hai-explorer.html</a>
+</li>
+</ul>
+<p>To browse locally in R:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">usethis</span><span class="fu">::</span><span class="fu">use_vignette</span><span class="op">(</span><span class="st">"germany-hai-explorer"</span><span class="op">)</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">build_vignettes</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>Once built, view with:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html" class="external-link">browseVignettes</a></span><span class="op">(</span><span class="st">"yusufHAIGermany"</span><span class="op">)</span></span></code></pre></div>
-<p>The vignette demonstrates: - Simulation process<br>
-- Professional time-series and animated charts<br>
-- Shiny app walkthrough</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/browseVignettes.html" class="external-link">browseVignettes</a></span><span class="op">(</span><span class="st">"yusufHAIGermany"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or open directly:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"data-description"</span>, package <span class="op">=</span> <span class="st">"yusufHAIGermany"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"examples"</span>, package <span class="op">=</span> <span class="st">"yusufHAIGermany"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"germany-HAI-explorer"</span>, package <span class="op">=</span> <span class="st">"yusufHAIGermany"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/vignette.html" class="external-link">vignette</a></span><span class="op">(</span><span class="st">"get-started"</span>, package <span class="op">=</span> <span class="st">"yusufHAIGermany"</span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 <div class="section level2">
 <h2 id="changelog">Changelog<a class="anchor" aria-label="anchor" href="#changelog"></a>
 </h2>
-<p>All updates are documented in <a href="./NEWS.html"><strong>NEWS.md</strong></a>.<br>
-Example format:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu"># yusufHAIGermany 0.1.0</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="ss">- </span>Initial release: simulation datasets and Shiny dashboard</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="fu"># Development version</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="ss">- </span>Added vignette “Germany HAI Explorer”</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="ss">- </span>Improved plot consistency and app layout</span></code></pre></div>
+<p>All updates are documented in <a href="news/index.html"><strong>NEWS.md</strong></a>. The latest version is 0.1.3, which includes the most recent integrated dataset and an updated Shiny dashboard.</p>
 <hr>
 </div>
 <div class="section level2">
@@ -266,33 +278,32 @@ Example format:</p>
 </li>
 <li>Data source: <em>ECDC PPS 2011–2012</em>, licensed under <strong>CC BY 4.0</strong>.</li>
 </ul>
-<p>Please cite both the original ECDC dataset and Zacher et al. (2019) when using derived results.</p>
 <hr>
 </div>
 <div class="section level2">
 <h2 id="credits">Credits<a class="anchor" aria-label="anchor" href="#credits"></a>
 </h2>
 <p>Developed for <strong>ETC5523 – Communicating with Data</strong> (Monash University, 2025).<br>
-Instructor: <strong>Michael Lydeamore</strong><br>
-Built with <code>tidyverse</code>, <code>lubridate</code>, <code>usethis</code>, and <code>shiny</code>.</p>
+Instructor: <strong>Michael Lydeamore</strong> &amp; <strong>Maliny Po</strong></p>
+<p><strong>Built with:</strong> <code>shiny</code>, <code>bslib</code>, <code>ggplot2</code>, <code>plotly</code>, <code>dplyr</code>, <code>tidyr</code>, <code>lubridate</code>, <code>scales</code>, <code>glue</code>, <code>yusufHAIGermany</code>.</p>
+<p><strong>Developed with:</strong> <code>devtools</code>, <code>usethis</code>, <code>roxygen2</code>, <code>pkgdown</code>, <code>knitr</code>, <code>rmarkdown</code>, <code>rsconnect</code>.</p>
 <hr>
 </div>
 <div class="section level2">
 <h2 id="recommended-workflow">Recommended Workflow<a class="anchor" aria-label="anchor" href="#recommended-workflow"></a>
 </h2>
 <ol style="list-style-type: decimal">
-<li>Install package → <code>pak::pak("ETC5523-2025/...")</code><br>
+<li>Install package: <code>pak::pak("ETC5523-2025/...")</code><br>
 </li>
-<li>Launch app → <code><a href="reference/launch_app.html">launch_app()</a></code><br>
+<li>Launch app: <code><a href="reference/launch_app.html">launch_app()</a></code><br>
 </li>
-<li>View vignette → <code>browseVignettes("yusufHAIGermany")</code><br>
+<li>View vignette: <code>browseVignettes("yusufHAIGermany")</code><br>
 </li>
-<li>Check changelog → <code>NEWS.md</code><br>
+<li>Check changelog: <code>NEWS.md</code><br>
 </li>
 <li>View documentation via pkgdown site</li>
 </ol>
 <hr>
-<p><em>Note: The dataset is combination of orginal source from the pdf and the simulated time series</em></p>
 </div>
 
   </main><aside class="col-md-3"><div class="links">
