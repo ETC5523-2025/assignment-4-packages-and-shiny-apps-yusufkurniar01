@@ -32,23 +32,17 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-app" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">App</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-app">
-<li><a class="external-link dropdown-item" href="https://yusufkurniar01.shinyapps.io/yusufHAIGermany/" target="_blank">Live App</a></li>
-    <li><a class="dropdown-item" href="../reference/launch_app.html">Run Locally</a></li>
-  </ul>
-</li>
+<li class="nav-item"><a class="external-link nav-link" href="https://yusufkurniar01.shinyapps.io/yusufHAIGermany/" target="_blank">Shiny App</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/get-started.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="../articles/examples.html">Examples</a></li>
-<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="active nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-data-methods" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Data &amp; Methods</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-data-methods">
-<li><a class="dropdown-item" href="../articles/data-description.html">Data description</a></li>
-    <li><a class="dropdown-item" href="../articles/germany-hai-explorer.html">Simulation notes</a></li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-data" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Data</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-data">
+<li><a class="dropdown-item" href="../articles/data-description.html">Data Description</a></li>
+    <li><a class="dropdown-item" href="../articles/germany-hai-explorer.html">Project Source</a></li>
   </ul>
 </li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Change log</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -79,19 +73,6 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ETC5523-2025.github.io/assignment-4-packages-and-shiny-apps-yusufkurniar01/">yusufHAIGermany</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org" class="external-link">readr</a></span><span class="op">)</span></span></code></pre></div>
 <p><strong>Purpose</strong></p>
 <p>This vignette details the structure, preparation, and simulation of
 datasets included in the yusufHAIGermany package. It describes the
@@ -112,7 +93,7 @@ available.</p>
 framework. Since the journal reports only aggregate annual totals,
 additional temporal detail had to be generated through synthetic,
 rule-based simulation.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">orig_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span><span class="op">~</span><span class="va">Variable</span>, <span class="op">~</span><span class="va">Description</span>, <span class="op">~</span><span class="va">Type</span>,</span>
 <span><span class="st">"year"</span>, <span class="st">"Calendar year of report (2011–2012)"</span>, <span class="st">"integer"</span>,</span>
@@ -124,7 +105,7 @@ rule-based simulation.</p>
 <span><span class="st">"dalys"</span>, <span class="st">"Annual DALYs"</span>, <span class="st">"numeric"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">orig_cols</span>, caption <span class="op">=</span> <span class="st">"Table 1: Variables in the Original Extracted Dataset"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">kable</span><span class="op">(</span><span class="va">orig_cols</span>, caption <span class="op">=</span> <span class="st">"Table 1: Variables in the Original Extracted Dataset"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Table 1: Variables in the Original Extracted Dataset</caption>
 <thead><tr class="header">
@@ -209,7 +190,7 @@ date, infection type, counts, and burden metrics.</p>
 <p>Synthetic monthly distributions were created for each HAI group to
 accurately reflect seasonal patterns while precisely matching the
 journal’s annual totals.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span><span class="op">~</span><span class="va">Variable</span>,        <span class="op">~</span><span class="va">Description</span>,                                    <span class="op">~</span><span class="va">Type</span>,</span>
 <span><span class="st">"date"</span>,           <span class="st">"First day of each month"</span>,                       <span class="st">"Date"</span>,</span>
@@ -223,7 +204,7 @@ journal’s annual totals.</p>
 <span><span class="st">"dalys_month"</span>,    <span class="st">"Simulated monthly DALYs"</span>,                       <span class="st">"numeric"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">monthly_cols</span>, caption <span class="op">=</span> <span class="st">"Table 2: Variables in the Monthly Simulated Dataset"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">kable</span><span class="op">(</span><span class="va">monthly_cols</span>, caption <span class="op">=</span> <span class="st">"Table 2: Variables in the Monthly Simulated Dataset"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Table 2: Variables in the Monthly Simulated Dataset</caption>
 <thead><tr class="header">
@@ -286,7 +267,7 @@ journal’s annual totals.</p>
 <p>Weekly counts were calculated using ISO week standards to ensure
 epidemiological consistency. Weekly figures accurately sum up to the
 monthly and yearly totals.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">weekly_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span><span class="op">~</span><span class="va">Variable</span>,        <span class="op">~</span><span class="va">Description</span>,                                      <span class="op">~</span><span class="va">Type</span>,</span>
 <span><span class="st">"date"</span>,           <span class="st">"Start date of ISO week"</span>,                           <span class="st">"Date"</span>,</span>
@@ -300,7 +281,7 @@ monthly and yearly totals.</p>
 <span><span class="st">"dalys_week"</span>,     <span class="st">"Simulated weekly DALYs"</span>,                           <span class="st">"numeric"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">weekly_cols</span>, caption <span class="op">=</span> <span class="st">"Table 3: Variables in the Weekly Simulated Dataset"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">kable</span><span class="op">(</span><span class="va">weekly_cols</span>, caption <span class="op">=</span> <span class="st">"Table 3: Variables in the Weekly Simulated Dataset"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Table 3: Variables in the Weekly Simulated Dataset</caption>
 <thead><tr class="header">
@@ -363,7 +344,7 @@ monthly and yearly totals.</p>
 <p>Daily values were produced by allocating weekly totals with
 low-variance jitter, ensuring smooth short-term trends without altering
 the overall burden.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">daily_cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span><span class="op">~</span><span class="va">Variable</span>,        <span class="op">~</span><span class="va">Description</span>,                                      <span class="op">~</span><span class="va">Type</span>,</span>
 <span><span class="st">"date"</span>,           <span class="st">"Daily date stamp"</span>,                                 <span class="st">"Date"</span>,</span>
@@ -378,7 +359,7 @@ the overall burden.</p>
 <span><span class="st">"dalys_day"</span>,      <span class="st">"Simulated daily DALYs"</span>,                            <span class="st">"numeric"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">daily_cols</span>, caption <span class="op">=</span> <span class="st">"Table 4: Variables in the Daily Simulated Dataset"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">kable</span><span class="op">(</span><span class="va">daily_cols</span>, caption <span class="op">=</span> <span class="st">"Table 4: Variables in the Daily Simulated Dataset"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Table 4: Variables in the Daily Simulated Dataset</caption>
 <thead><tr class="header">

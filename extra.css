@@ -32,3 +32,8 @@ h1, h2, h3, h4, h5, h6 { scroll-margin-top: calc(var(--pkgdown-nav-height) + 8px
 /* larger headings with the new serif */
 h1, .h1 { font-weight: 700; letter-spacing: .2px; }
 h2, .h2 { font-weight: 700; letter-spacing: .15px; }
+
+/* tidy spacing for the Shiny App link */
+.navbar .navbar-nav .nav-item:first-child .nav-link {
+  padding-right: 18px;   /* add space after Shiny App */
+}
