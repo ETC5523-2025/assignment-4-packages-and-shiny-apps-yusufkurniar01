@@ -11,12 +11,13 @@ library(lubridate)
 library(scales)
 library(glue)
 library(shinyjs)
-library(yusufHAIGermany)
 
 # data
-data("sim_daily",   package = "yusufHAIGermany")
-data("sim_weekly",  package = "yusufHAIGermany")
-data("sim_monthly", package = "yusufHAIGermany")
+load("data/sim_daily.rda",   envir = globalenv())
+load("data/sim_weekly.rda",  envir = globalenv())
+load("data/sim_monthly.rda", envir = globalenv())
+
+stopifnot(exists("sim_daily"), exists("sim_weekly"), exists("sim_monthly"))
 
 hai_levels <- c("HAP","SSI","BSI","UTI","CDI")
 for (x in c("sim_daily","sim_weekly","sim_monthly")) {

@@ -1,6 +1,6 @@
 Package: yusufHAIGermany
 Title: Analysis of Germany HAI Burden (German PPS) with Shiny Explorer
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: 
     person("Yusuf", "Romadhon", , "yrom002@student.monash.edu", role = c("aut", "cre"))
 Description: German PPS HAI burden data (2011) with 95% uncertainty
@@ -13,17 +13,20 @@ BugReports:
 Depends: 
     R (>= 4.2.0)
 Imports:
-    shiny
+    shiny,
+    scales,
+    glue,
+    bslib,
+    ggplot2,
+    plotly,
+    dplyr,
+    tidyr,
+    lubridate
 Suggests:
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),
-    dplyr,
-    ggplot2,
-    bslib,
     DT,
-    plotly,
-    lubridate,
     readr
 VignetteBuilder: 
     knitr
